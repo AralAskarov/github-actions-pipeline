@@ -9,11 +9,16 @@ on:
         description: "YAML links to pipeline definitions, comma/space separated"
         required: true
         type: string
+      pipeline_vars:
+        description: "Extra variables: KEY1=val1; KEY2=val2"
+        required: false
+        type: string
 
 jobs:
   run-pipeline:
     uses: AralAskarov/github-actions-executor/.github/workflows/executor.yml@main
     with:
       pipeline_config_sources: ${{ inputs.pipeline_config_sources || vars.PIPELINE_CONFIG_SOURCES }}
+      pipeline_vars: ${{ inputs.pipeline_vars || vars.PIPELINE_VARS || '' }}
     secrets:
       access_token: ${{ secrets.GH_PAT }}

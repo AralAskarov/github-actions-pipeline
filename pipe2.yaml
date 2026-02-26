@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: LoomPipeline
+pipeline:
+  id: build-docker-image
+  name: Build Docker Image Pipeline
+  vars:
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_TLS_CERTDIR: ""
+
+  stages:
+    - name: notification
+      job: telegram-notification
+
+  jobs:
+    
+    telegram-notification:
+      path: ${LOOM_CLI_IMAGE}
+      command: send_telegram_notification
+      input:
+        params:
+          params.message: "Test notification from Loom CLI"
+        secure_params:
+          systems.telegram.token: ${TG_TOKEN}
+          systems.telegram.chat_id: "${TG_CHAT_ID}"
+      when:
+        statuses: SUCCESS

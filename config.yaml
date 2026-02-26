@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: LoomConfig
+global:
+  vars:
+    LOOM_CLI_IMAGE: arala/loom_cli:8
+    GITLAB_URL: https://gitlab.com/declarative-pipelines/modules/loom_cli_library
+    REGISTRY_URL: "docker.io"
